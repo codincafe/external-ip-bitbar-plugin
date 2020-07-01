@@ -10,7 +10,14 @@
 
 echo "🌎"
 echo '---' 
-OUTPUT=$(curl -s https://ipinfo.io/ip)
 
-result_string="$OUTPUT | bash='/bin/bash' param1='-c' param2='/bin/echo $OUTPUT | pbcopy' terminal=false"
+if [ $(curl -LI http://google.com -o /dev/null -w '%{http_code}\n' -s) == "200" ]; then
+    OUTPUT=$(curl -s https://ipinfo.io/ip)
+    result_string="$OUTPUT | bash='/bin/bash' param1='-c' param2='/bin/echo $OUTPUT | pbcopy' terminal=false";
+else
+    result_string="No Internet Connection"
+fi
+
 echo "$result_string"
+echo ---
+echo "Refresh... | refresh=true"
